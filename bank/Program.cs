@@ -34,7 +34,7 @@ namespace bank
                 Console.Write("Input Balance : ");
                 balance = Convert.ToDouble(Console.ReadLine());
                 Console.Write("Input ID Number : ");
-                id = Convert.ToDouble(Console.ReadLine());
+                id = Convert.ToDouble(Console.ReadLine());//
                 Console.Clear();
                 if(id < 0 || id > 9999999999999999)
                 {
