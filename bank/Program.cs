@@ -7,12 +7,13 @@ namespace bank
 {
     class Program
     {
+        static List<Customerdata> CustomerList = new List<Customerdata>();
         static void Main(string[] args)
         {
-            double id = 0;
+        Choicemenu:
+            uint id = 0;
             double balance = 0;
             String name = "";
-        Choicemenu:
             Console.Clear();
             String Enter = "";
             String topic = "              =[BANK]=       \r\n\r\n";
@@ -35,15 +36,16 @@ namespace bank
                 Console.Write("Input Balance : ");
                 balance = Convert.ToDouble(Console.ReadLine());
                 Console.Write("Input ID Number : ");
-                id = Convert.ToDouble(Console.ReadLine());
+                id = Convert.ToUInt32(Console.ReadLine());
                 Console.Clear();
-                if (id < 0 || id > 9999999999999999)
+                if (id < 0 || id > 3999999999)
                 {
                     Console.Clear();
                     goto createmenu;
                 }
                 else
                 {
+                    CustomerList.Add(new Customerdata(name, id, balance));
                 createfinish:
                     Console.Write(topic +
                                       "Create Account Finish \r\n\r\n" +
@@ -63,30 +65,30 @@ namespace bank
             else if (Choicemenu == "Deposit" || Choicemenu == "deposit")
             {
                 Console.Write("Input id : ");
-                double idi = Convert.ToDouble(Console.ReadLine());
-                if (idi == id)
+                uint InputID = Convert.ToUInt32(Console.ReadLine());
+                for (int x = 0; x < CustomerList.Count; x++)
                 {
-                    Console.WriteLine("You Balance : " + balance);
-                    Console.Write("Add Money Input : ");
-                    double add = Convert.ToDouble(Console.ReadLine());
-                    balance = balance + add;
-                Enter:
-                    Console.Clear();
-                    Console.Write($"Add Money Finish u money is {balance} \r\n\r\n" +
-                        "Plese Enter to menu :");
-                    Enter = Console.ReadLine();
-                    if (Enter == "")
+                    
+                    if (InputID == CustomerList[x].Id)
                     {
-                        goto Choicemenu;
+                        Console.WriteLine("You Balance : " + CustomerList[x].Balance);
+                        Console.Write("Add Money Input : ");
+                        double add = Convert.ToDouble(Console.ReadLine());
+                        balance = CustomerList[x].Balance + add;
+                    Enter:
+                        Console.Clear();
+                        Console.Write($"Add Money Finish u money is {balance} \r\n\r\n" +
+                            "Plese Enter to menu :");
+                        Enter = Console.ReadLine();
+                        if (Enter == "")
+                        {
+                            goto Choicemenu;
+                        }
+                        else
+                        {
+                            goto Enter;
+                        }
                     }
-                    else
-                    {
-                        goto Enter;
-                    }
-                }
-                else
-                {
-                    goto Choicemenu;
                 }
 
             }
@@ -115,7 +117,7 @@ namespace bank
                     }
                 }
             }
-            else if (Choicemenu == "Check" || Choicemenu == "check") // ยังเช็ค เป็นยอดของคนๆ ไม่ได้
+            else if (Choicemenu == "Check" || Choicemenu == "check")
             {
             Menucheck:
                 Console.Write("Input ID : ");
